@@ -1,0 +1,20 @@
+{
+    "name": "CoxAndCox/MarketingPreferences",
+    "description": "N/A",
+    "type": "magento2-module",
+    "license": [
+        "proprietary"
+    ],
+    "require": {
+        "php": "~7.0.0",
+            "magento/framework": "100.0.*|100.1.*"
+        },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "CoxAndCox\\MarketingPreferences\\": ""
+        }
+    }
+}

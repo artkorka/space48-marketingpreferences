@@ -1,0 +1,24 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/**
+ * @var $block \Magento\CheckoutAgreements\Block\Agreements
+ */
+?>
+
+<div data-bind="scope: 'paypal-newsletter-scope'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "paypal-newsletter-scope": {
+                        "component": "CoxAndCox_MarketingPreferences/js/view/newsletter-input"
+                    }
+                }
+            }
+        }
+    }
+</script>
