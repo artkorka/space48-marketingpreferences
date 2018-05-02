@@ -4,4 +4,4 @@
 3. magento/bin setup:upgrade
 4. magento/bin clear:cache
 
-Video sample https://drive.google.com/file/d/1OA_yMUo7fTRIEQnyyXNMmRBrGpfyfeAi/view
+Video sample for guest user  https://drive.google.com/file/d/1OA_yMUo7fTRIEQnyyXNMmRBrGpfyfeAi/view
