@@ -4,5 +4,5 @@
 3. magento/bin setup:upgrade
 4. magento/bin clear:cache
 
-Video sample for guest user  https://drive.google.com/file/d/1OA_yMUo7fTRIEQnyyXNMmRBrGpfyfeAi/view
-Video samole for registered customer https://drive.google.com/file/d/1XikJa3iGXyV8tKVR7KCgoWZXbk7KIRsj/view 
+1. Video sample for guest user  https://drive.google.com/file/d/1OA_yMUo7fTRIEQnyyXNMmRBrGpfyfeAi/view
+2. Video samole for registered customer https://drive.google.com/file/d/1XikJa3iGXyV8tKVR7KCgoWZXbk7KIRsj/view 
