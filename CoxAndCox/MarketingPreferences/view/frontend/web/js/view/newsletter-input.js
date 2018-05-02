@@ -43,7 +43,6 @@ define(
             },
 
             thirdPartyLoad: function (target, viewModel) {
-
                 var self = this;
                 $.ajax({
                     url: Newsletter.url,
@@ -54,9 +53,6 @@ define(
 
                         var nameField = $(target).attr('name');
 
-                        if (data['customer_logged'] == false) {
-                            $("input[name="+nameField+"]").parent().css('display','none');
-                        }
 
                         if (data['third_party'] == 1) {
                             $("input[name="+nameField+"]").prop('checked',true);
@@ -79,10 +75,6 @@ define(
                     success : function(data){
                         var nameField = $(target).attr('name');
 
-                        if (data['customer_logged'] == false) {
-                            $("input[name="+nameField+"]").parent().css('display','none');
-                        }
-
                         if (data['postal_mailings'] == 1) {
                             $("input[name="+nameField+"]").prop('checked',true);
                         } else {
@@ -103,10 +95,6 @@ define(
                     },
                     success : function(data){
                         var nameField = $(target).attr('name');
-
-                        if (data['customer_logged'] == false) {
-                            $("input[name="+nameField+"]").parent().css('display','none');
-                        }
 
                         if (data['newsletter_signup'] == 1) {
                             $("input[name="+nameField+"]").prop('checked',true);

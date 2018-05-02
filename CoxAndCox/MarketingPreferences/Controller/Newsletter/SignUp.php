@@ -14,13 +14,14 @@ namespace CoxAndCox\MarketingPreferences\Controller\Newsletter;
 
 use Magento\Customer\Model\Customer;
 use Magento\Customer\Model\Session;
+use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Framework\App\Action\Context;
 use CoxAndCox\MarketingPreferences\Model\ThirdParty;
 use CoxAndCox\MarketingPreferences\Model\PostalMailings;
 use CoxAndCox\MarketingPreferences\Model\Subscribe;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\Json\Helper\Data;
-use Magento\Framework\Exception\MailException;
+
 
 class SignUp extends Action
 {
@@ -66,6 +67,12 @@ class SignUp extends Action
      */
     private $customer;
 
+
+    /**
+     * @var CheckoutSession
+     */
+    private $checkoutSession;
+
     /**
      * NewsletterSignUp constructor.
      *
@@ -75,6 +82,7 @@ class SignUp extends Action
      * @param Subscribe  $subscribe
      * @param Session    $session
      * @param Data       $jsonHelper
+     * @param CheckoutSession    $checkoutSession
      */
     public function __construct(
         Context $context,
@@ -82,13 +90,15 @@ class SignUp extends Action
         PostalMailings $postalMailings,
         Subscribe $subscribe,
         Session $session,
-        Data $jsonHelper
+        Data $jsonHelper,
+        CheckoutSession $checkoutSession = null
     ) {
         $this->thirdParty = $thirdParty;
         $this->postalMailings = $postalMailings;
         $this->subscribe = $subscribe;
         $this->session = $session;
         $this->jsonHelper = $jsonHelper;
+        $this->checkoutSession = $checkoutSession;
 
         parent::__construct($context);
     }
@@ -114,6 +124,7 @@ class SignUp extends Action
                     $thirdPartyValue = (int) $this->thirdParty->getThirdPartyDataAgainstCustomer(
                         $this->getCustomerId()
                     );
+
                     $responseData['third_party'] = $thirdPartyValue;
                 }
 
@@ -140,6 +151,10 @@ class SignUp extends Action
                         $this->getCustomerId(),
                         $this->optedIntoThirdParty($optInParams)
                     );
+                    if(!$this->checkoutSession->getQuote()->getCustomerId()) {
+                        $this->checkoutSession->getQuote()->setThirdPartyMailings((bool)$optInParams['optIn_ThirdParty']);
+                        $this->checkoutSession->getQuote()->save();
+                    }
                 }
 
                 if (isset($optInParams['optIn_PostalMailings'])) {
@@ -148,6 +163,10 @@ class SignUp extends Action
                         $this->getCustomerId(),
                         $this->optedIntoPostalMailings($optInParams)
                     );
+                    if(!$this->checkoutSession->getQuote()->getCustomerIsGuest()) {
+                        $this->checkoutSession->getQuote()->setPostalMailings((bool)$optInParams['optIn_PostalMailings']);
+                        $this->checkoutSession->getQuote()->save();
+                    }
                 }
 
                 if (isset($optInParams['optIn_NewsletterMailings'])) {
@@ -160,9 +179,6 @@ class SignUp extends Action
 
                 }
             }
-        } else {
-            $responseData['customer_logged'] = (bool)$this->getCustomerId();
-            $this->getResponse()->representJson($this->jsonHelper->jsonEncode($responseData));
         }
     }
 
@@ -172,7 +188,13 @@ class SignUp extends Action
      */
     private function getCustomerEmail()
     {
-        return $this->getCustomer()->getData('email');
+
+
+
+        if (!$this->getCustomer()->getId())
+            return $this->checkoutSession->getQuote()->getBillingAddress()->getEmail();
+        else
+            return $this->getCustomer()->getData('email');
     }
 
     /**

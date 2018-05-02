@@ -9,4 +9,20 @@
     <type name="Magento\Newsletter\Controller\Manage\Save">
         <plugin name="marketing_preferences" type="CoxAndCox\MarketingPreferences\Plugin\Newsletter\Controller\Manage\SavePlugin"/>
     </type>
+
+    <type name="Magento\Customer\Controller\Account\CreatePost">
+        <plugin name="marketing_preferences_create_customer" type="CoxAndCox\MarketingPreferences\Plugin\Customer\Controller\Account\CreatePostPlugin"/>
+    </type>
+
+    <type name="CoxAndCox\MarketingPreferences\Controller\Newsletter\SignUp">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">\Magento\Checkout\Model\Session</argument>
+        </arguments>
+    </type>
+
+    <type name="CoxAndCox\MarketingPreferences\Plugin\Customer\Controller\Account\CreatePostPlugin">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">\Magento\Customer\Model\Session</argument>
+        </arguments>
+    </type>
 </config>

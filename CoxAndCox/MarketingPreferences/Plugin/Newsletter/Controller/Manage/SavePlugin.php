@@ -55,7 +55,6 @@ class SavePlugin
      */
     public function afterExecute(\Magento\Newsletter\Controller\Manage\Save $subject, $result)
     {
-
         $valueThirdParty = (boolean)$subject->getRequest()->getParam('third_party', false);
         $valuePostalMailings = (boolean)$subject->getRequest()->getParam('postal_mailings', false);
 
